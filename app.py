@@ -13,7 +13,7 @@ st.title("💀 On-Chain Obituary")
 st.caption("Paste a dead crypto project. Get its autopsy.")
 st.markdown(
     "Enter the details of a rugged, dead, or collapsed crypto project. "
-    "The agent will pull on-chain data, check GitHub, and write a forensic autopsy report."
+    "The agent pulls on-chain data, checks GitHub activity, and writes a forensic autopsy report."
 )
 
 st.divider()
@@ -40,46 +40,38 @@ with st.form("autopsy_form"):
 
 if submitted:
     if not project_name or not contract_address:
-        st.error("Project name and contract address are required to run the autopsy.")
+        st.error("⚠️ Project name and contract address are required.")
     else:
         col1, col2, col3 = st.columns(3)
-
         with col1:
-            with st.spinner("Fetching on-chain data..."):
+            with st.spinner("On-chain data..."):
                 tx_summary = get_tx_summary(contract_address)
             st.success("On-chain data ✓")
-
         with col2:
-            with st.spinner("Fetching price history..."):
-                price_summary = (
-                    get_price_summary(token_id)
-                    if token_id
-                    else "No CoinGecko ID provided."
-                )
+            with st.spinner("Price history..."):
+                price_summary = get_price_summary(token_id) if token_id else "No CoinGecko ID provided."
             st.success("Price data ✓")
-
         with col3:
-            with st.spinner("Checking GitHub..."):
-                github_summary = (
-                    get_github_summary(github_url)
-                    if github_url
-                    else "No GitHub repo provided."
-                )
+            with st.spinner("GitHub activity..."):
+                github_summary = get_github_summary(github_url) if github_url else "No GitHub repo provided."
             st.success("GitHub data ✓")
 
         st.divider()
 
-        with st.spinner("Writing autopsy report... 🔬"):
-            report = run_autopsy(
-                contract_address=contract_address,
-                project_name=project_name,
-                tx_summary=tx_summary,
-                github_summary=github_summary,
-                price_summary=price_summary,
-            )
+        with st.spinner("🔬 Writing autopsy report..."):
+            try:
+                report = run_autopsy(
+                    contract_address=contract_address,
+                    project_name=project_name,
+                    tx_summary=tx_summary,
+                    github_summary=github_summary,
+                    price_summary=price_summary,
+                )
+                st.subheader(f"📋 Official Autopsy Report: {project_name}")
+                st.markdown(report)
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
 
-        st.subheader(f"📋 Official Autopsy Report: {project_name}")
-        st.markdown(report)
         st.divider()
         st.caption(
             "On-Chain Obituary — built for Activate AI Fellows 2026 by "
