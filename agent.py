@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 from prompts import AUTOPSY_PROMPT
 
 load_dotenv()
@@ -13,8 +13,7 @@ def run_autopsy(contract_address, project_name, tx_summary, github_summary, pric
             "GEMINI_API_KEY is not set. Please add it in HuggingFace Space Settings → Variables and Secrets."
         )
 
-    genai.configure(api_key=gemini_key)
-    model = genai.GenerativeModel("gemini-2.0-flash")
+    client = genai.Client(api_key=gemini_key)
 
     filled_prompt = AUTOPSY_PROMPT.format(
         contract_address=contract_address,
@@ -24,5 +23,8 @@ def run_autopsy(contract_address, project_name, tx_summary, github_summary, pric
         price_summary=price_summary,
     )
 
-    response = model.generate_content(filled_prompt)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=filled_prompt,
+    )
     return response.text
