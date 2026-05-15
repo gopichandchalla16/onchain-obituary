@@ -26,7 +26,7 @@ def run_autopsy(contract_address, project_name, tx_summary, github_summary, pric
             "Content-Type": "application/json",
         },
         json={
-            "model": "llama3-8b-8192",
+            "model": "llama-3.3-70b-versatile",
             "messages": [
                 {"role": "user", "content": filled_prompt}
             ],
