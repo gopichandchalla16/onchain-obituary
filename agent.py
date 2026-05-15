@@ -8,9 +8,15 @@ load_dotenv()
 
 
 def run_autopsy(contract_address, project_name, tx_summary, github_summary, price_summary):
+    groq_key = os.environ.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+    if not groq_key:
+        raise ValueError(
+            "GROQ_API_KEY is not set. Please add it in HuggingFace Space Settings → Variables and Secrets."
+        )
+
     llm = ChatGroq(
-        groq_api_key=os.getenv("GROQ_API_KEY"),
-        model_name="llama3-70b-8192",
+        api_key=groq_key,
+        model="llama3-70b-8192",
         temperature=0.85,
     )
     prompt = PromptTemplate(
