@@ -14,7 +14,7 @@ def run_autopsy(contract_address, project_name, tx_summary, github_summary, pric
         )
 
     genai.configure(api_key=gemini_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
 
     filled_prompt = AUTOPSY_PROMPT.format(
         contract_address=contract_address,
