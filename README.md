@@ -1,3 +1,14 @@
+---
+title: On-Chain Obituary
+emoji: 💀
+colorFrom: gray
+colorTo: red
+sdk: streamlit
+sdk_version: "1.33.0"
+app_file: app.py
+pinned: false
+---
+
 # 💀 On-Chain Obituary
 
 > Paste a dead crypto project. Get its autopsy.
@@ -13,7 +24,7 @@ On-Chain Obituary is an AI-powered forensic tool that analyses dead or rugged cr
 - Fetches last 50 token transactions via Etherscan API
 - Pulls 90-day price history from CoinGecko
 - Checks GitHub commit activity
-- Runs a LangChain + Groq LLaMA agent that writes a structured forensic autopsy
+- Groq LLaMA 3 agent writes a structured forensic autopsy report
 
 ## 🧾 Autopsy Report Includes
 
@@ -48,17 +59,9 @@ streamlit run app.py
 
 ---
 
-## 🌐 Deploy on HuggingFace Spaces
-
-1. Create a new Streamlit Space on [huggingface.co/spaces](https://huggingface.co/spaces)
-2. Push this repo
-3. Add secrets: `GROQ_API_KEY`, `ETHERSCAN_API_KEY`, `GITHUB_TOKEN`
-
----
-
 ## 🛠 Tech Stack
 
-- **LLM:** Groq LLaMA 3 70B via LangChain
+- **LLM:** Groq LLaMA 3 (via REST API)
 - **On-chain data:** Etherscan API
 - **Price data:** CoinGecko API
 - **GitHub data:** GitHub REST API
@@ -72,7 +75,6 @@ streamlit run app.py
 - Terra Luna (LUNA)
 - Squid Game Token (SQUID)
 - Iron Finance (TITAN)
-- Frosties NFT
 
 ---
 
